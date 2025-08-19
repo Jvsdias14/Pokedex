@@ -73,13 +73,12 @@ async function renderPokemon(pokemon){
 
     const tipos = data.types.map(type => type.type)
     const tipoEncontrado = tipos.find(({name}) => name in backs)
-    console.log(tipoEncontrado)
     const status = data.stats.map(stat => stat.base_stat)
 
     if(tipoEncontrado){
-        pokeBack.style.backgroundImage = `url('../images/${backs[tipoEncontrado.name]}')`;
+        pokeBack.style.backgroundImage = `url('./images/${backs[tipoEncontrado.name]}')`;
     }else{
-        pokeBack.style.backgroundImage = "url('../images/FundoPadrao.png')";
+        pokeBack.style.backgroundImage = "url('./images/FundoPadrao.png')";
     }
 
     async function fetchTypeData(tipo) {
@@ -91,8 +90,6 @@ async function renderPokemon(pokemon){
     const tiposData = await Promise.all(
         tipos.map(tipo => fetchTypeData(tipo))
     )
-
-    console.log(tiposData)
 
     let typesHTML = ''
     tiposData.forEach((typeData, index) => {
@@ -116,7 +113,6 @@ async function renderPokemon(pokemon){
     status.forEach((stat, index )=> {
         statusValues[index].innerHTML = stat;
         statusBars[index].style.width = `${(stat/2)}%`
-        console.log(stat,index)
     });
 
 
@@ -141,7 +137,6 @@ async function getSound(url){
         // Reproduzir o som
         await audio.play();
         
-        console.log('Som do Pokémon reproduzido!');
     } catch (error) {
         console.error('Erro ao reproduzir som:', error);
     }
