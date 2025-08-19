@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+
+    <link rel="icon" href="./favicons/output-onlinepngtools.png">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+    <main>
+        <div class="pokemon-container">
+            <img src="" alt="pokemon" class="pokemon-image"/>
+        </div>
+        
+        <h1 class="pokemon-data"></h1>
+            <!-- <span class="pokemon-number">6 - </span>
+            <span class="pokemon-name">Charizard</span> -->
+            <!-- <div class="pokemon-types">
+                <span class="type">Fire</span>
+                <span class="type">Flying</span>
+            </div> -->
+        <div class="poke-bg1">
+            <form>
+                <input class="entry" placeholder="Digite o pokemon ou seu número"/>
+            </form>
+            <div class="nav-buttons">
+                <button id="btn-sound" class="btn-arrows"></button>
+                <button id="btn-left" class="btn-arrows"></button>
+                <button id="btn-right" class="btn-arrows"></button>
+            </div>
+            
+        </div>
+        <div class="poke-bg2">
+            <div class="painel">
+                <span class="poke-name"></span>
+                <div class="status-bg">
+                    <div class="status-pt1">
+                        <div class="status-container">
+                            <span class="stat-name">HP</span>
+                            <span id="HP-value" class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="HP-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span class="stat-name">ATK</span>
+                            <span id="ATK-value" class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="ATK-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span class="stat-name">DEF</span>
+                            <span id="DEF-value" class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="DEF-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-pt2">
+                        <div class="status-container">
+                            <span id="SP-ATK" class="stat-name">SP. ATK</span>
+                            <span id="SP_ATK-value" class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="SP_ATK-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span id="SP-DEF" class="stat-name">SP. DEF</span>
+                            <span id="SP_DEF-value"class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="SP_DEF-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span class="stat-name">SPD</span>
+                            <span id="SPD-value" class="stat-value">0</span>
+                            <div class="stat-bar">
+                                <div id="SPD-bar" class="stat-bar-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="types-painel">
+                <div class="types-row"></div>
+                <div class="poke-infos">
+                    <div>
+                        <span class="info">Altura: </span>
+                        <span class="poke-height"></span>
+                    </div>
+                    <div>
+                        <span class="info">Peso: </span>
+                        <span class="poke-weight"></span>
+                    </div>
+                </div>
+                <span class="poke-desc">"..."</span>
+            </div>
+        </div>
+
+        <img src="./images/pokedex.png" alt="pokedex" class="pokedex">
+    </main>
+
+    <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>
