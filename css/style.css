@@ -112,7 +112,7 @@ form{
 .entry{
     width: 85%;
     padding: 3%;
-    font-size: clamp(0.7rem, 2.5vw, 1rem);
+    font-size: clamp(0.6rem, 1.45vw, 1rem);
     border-radius: 5px;
     border-color: black;
     font-weight: 600;
