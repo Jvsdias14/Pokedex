@@ -25,6 +25,7 @@ const typesRow = document.querySelector('.types-row')
 const Weight = document.querySelector('.poke-weight')
 const Height = document.querySelector('.poke-height')
 const Desc = document.querySelector('.poke-desc')
+const body = document.querySelector('body')
 
 let pokemon = 1
 let last_pokemon = 1
@@ -35,8 +36,29 @@ const statusValues = [HP_value, ATK_value, DEF_value, SP_ATK_value, SP_DEF_value
 const backs = {water: 'FundoAgua.png', grass: 'FundoPadrao.png', fire: 'FundoFogo.png', ice: 'FundoGelo.png', dark: 'FundoNoite.png',
     flying: 'FundoVoador.png', ghost: 'FundoNoite.png', ground: 'FundoTerra.png', rock: 'FundoTerra.png', dragon: 'FundoDragão.png',
     fairy: 'FundoFada.png', electric: 'FundoEletrico.png', steel: 'FundoMetal.png', psychic: 'FundoPsiquico.png', fighting: 'FundoLutador.png',
-    bug: 'FundoInseto.png', poison: 'FundoVeneno.png'
+    bug: 'FundoInseto.png', poison: 'FundoVeneno.png', normal: 'FundoPadrao.png'
 }
+
+const typeGradients = {
+    normal: 'radial-gradient(circle at center, #DDC988, #8B7A4C)',
+    fire: 'radial-gradient(circle at center,rgb(255, 153, 80),rgb(194, 65, 0))',
+    water: 'radial-gradient(circle at center,rgb(118, 175, 250),rgb(23, 83, 156))',
+    electric: 'radial-gradient(circle at center,rgb(248, 232, 107),rgb(185, 155, 5))',
+    grass: 'radial-gradient(circle at center, #86E64B, #4C6F2A)',
+    ice: 'radial-gradient(circle at center, #C6EBF4, #61A4B0)',
+    fighting: 'radial-gradient(circle at center,rgb(245, 149, 125),rgb(155, 37, 47))',
+    poison: 'radial-gradient(circle at center, #A155A2, #4C264D)',
+    ground: 'radial-gradient(circle at center,rgb(230, 181, 108),rgb(180, 116, 31))',
+    flying: 'radial-gradient(circle at center, #A98FF3, #72A5D8)',
+    psychic: 'radial-gradient(circle at center,rgb(252, 183, 162),rgb(255, 96, 75))',
+    bug: 'radial-gradient(circle at center, #B9C63A,rgb(81, 88, 42))',
+    rock: 'radial-gradient(circle at center,rgb(248, 226, 155),rgb(148, 138, 104))',
+    ghost: 'radial-gradient(circle at center, #7A589F, #362E4A)',
+    dragon: 'radial-gradient(circle at center,rgb(101, 122, 154),rgb(35, 36, 105))',
+    dark: 'radial-gradient(circle at center, #705746, #4C3C30)',
+    steel: 'radial-gradient(circle at center, #8A8B9D, #202020)',
+    fairy: 'radial-gradient(circle at center,rgb(241, 171, 213),rgb(170, 62, 127))',
+};
 
 async function fecthPokemons(pokemon){
     const response = await fetch(`${BASE_URL}${pokemon}`)
@@ -76,15 +98,11 @@ async function renderPokemon(pokemon){
     const status = data.stats.map(stat => stat.base_stat)
 
     if(tipoEncontrado){
-        pokeBack.style.backgroundImage = `url('./images/${backs[tipoEncontrado.name]}')`;
+        pokeBack.style.backgroundImage = `url('./images/${backs[tipoEncontrado.name]}')`
+        body.style.background = typeGradients[tipoEncontrado.name];
     }else{
         pokeBack.style.backgroundImage = "url('./images/FundoPadrao.png')";
-    }
-
-    async function fetchTypeData(tipo) {
-        const response = await fetch(tipo.url)
-        const typeData = await response.json()
-        return typeData
+        body.style.background = 'radial-gradient(circle at center, #6d6e70, #202020)';
     }
 
     const tiposData = await Promise.all(
@@ -115,7 +133,6 @@ async function renderPokemon(pokemon){
         statusBars[index].style.width = `${(stat/2)}%`
     });
 
-
     HP_value.innerHTML = status[0]
     HP_bar.style.width = `${(status[0]/2)}%`
     
@@ -142,8 +159,13 @@ async function getSound(url){
     }
 }
 
+async function fetchTypeData(tipo) {
+    const response = await fetch(tipo.url)
+    const typeData = await response.json()
+    return typeData
+}
+
 function chooseText(entries, MAX_LEN = 110){
-	// Encontrar a primeira entrada em inglês
 	const englishEntry = entries.find(e => e.language?.name === 'en') ?? entries[0]
 
 	if (!englishEntry) return { flavor_text: 'Descrição não disponível' };
@@ -151,7 +173,6 @@ function chooseText(entries, MAX_LEN = 110){
 	// Normalizar texto: remover \f e quebras, colapsar espaços
 	const normalized = (englishEntry.flavor_text || '')
 		.replace(/\f/g, ' ')
-		.replace(/\s+/g, ' ')
 		.trim();
 
 	if (normalized.length <= MAX_LEN) {
@@ -175,17 +196,17 @@ function chooseText(entries, MAX_LEN = 110){
 	return { flavor_text: finalText };
 } 
 
-// async function translate(texto){
-//     const response = await fetch(`https://api.mymemory.translated.net/get?q=${texto}&langpair=en|pt`)
-//     if (response.status == 200){
-//         const data = await response.json()
-//         console.log(data)
-//         return data.responseData.translatedText
-//     } else{
-//         console.warn('Erro na tradução, retornando texto original');
-//         return texto;
-//     }
-// }
+async function translate(texto){
+    const response = await fetch(`https://api.mymemory.translated.net/get?q=${texto}&langpair=en|pt`)
+    if (response.status == 200){
+        const data = await response.json()
+        console.log(data)
+        return data.responseData.translatedText
+    } else{
+        console.warn('Erro na tradução, retornando texto original');
+        return texto;
+    }
+}
 
 btnLeft.addEventListener('click', async () => {
     if(pokemon > 1){
