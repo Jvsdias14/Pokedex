@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
 
+/* Regras básicas e globais */
+html, body {
+    /* overflow: hidden; */ /* ❌ REMOVIDO - Causava problemas em mobile */
+}
+
+html {
+    /* Define o tamanho da fonte do elemento raiz para que seja responsiva */
+    font-size: calc(8px + 0.52vw); 
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -14,43 +24,47 @@ body {
 }
 
 main {
-    display: inline-block;
-    padding: 10px;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.pokedex {
-    width: 90%;
-    /* max-width: 80%; */
+.pokedex-body {
+    width: 90vw;
+    max-width: 900px;
+    aspect-ratio: 840/639; /* ✅ ADICIONADO - Mantém proporção correta */
+    position: relative;
+    background-image: url(../images/pokedex.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* ✅ MELHORADO - Variáveis para largura E altura */
+    --pokedex-width: min(900px, 90vw);
+    --pokedex-height: calc(var(--pokedex-width) * 639 / 840);
 }
 
 .pokemon-container {
     position: absolute;
-    left: 35%;
-    bottom: 55%;
-    width: 28%;
-    height: 28%; 
-    transform: translate(-70%, 50%); 
-    z-index: -1;
-
-    /* A imagem de cenário se torna o background deste contêiner */
+    top: calc(var(--pokedex-height) * 0.31); /* ✅ CORRIGIDO - Usa altura */
+    left: calc(var(--pokedex-width) * 0.115);
+    width: calc(var(--pokedex-width) * 0.31);
+    height: calc(var(--pokedex-height) * 0.31); /* ✅ ADICIONADO - Altura fixa */
     background-image: url(../images/FundoPadrao.png);
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    
-    display: flex; /* Usamos flexbox para centralizar o Pokémon */
-    justify-content: center;
-    align-items: center;
+    z-index: -1;
 }
 
 .pokemon-image {
     position: absolute;
-    height: 90%;
-    margin-top: 15%;
-    margin-left: 5%;
-    animation:
-        mover 1.5s infinite ease-in-out 0.5s;
+    top: 57%; /* ✅ SIMPLIFICADO - Centralizado */
+    left: 50%;
+    transform: translate(-50%, -50%); /* ✅ ADICIONADO - Centralização perfeita */
+    height: 80%;
+    animation: mover 1.5s infinite ease-in-out 0.5s;
     will-change: transform;
 }
 
@@ -65,44 +79,41 @@ main {
 
 @keyframes mover {
     0%, 100% {
-        transform: translate(0%, 0%)
+        transform: translate(-50%, -50%); /* ✅ CORRIGIDO - Mantém centralização */
     }
     50% {
-        transform: translate(-3%, -6%);
+        transform: translate(-53%, -56%); /* ✅ AJUSTADO */
     } 
 }
 
 .pokemon-data {
     position: absolute;
-    font-weight: 600;
-    color: #aaa;
-    top: 54.5%;
-    right: 27%;
+    top: 17%;
+    right: 5%;
+    width: 35%;
 }
 
-.poke-bg1{
+.poke-bg1 {
     position: absolute;
     background-color: #d30a40;
-    height: 20%;
-    width: 34%;
-    transform: translate(35%, 331%);
+    top: calc(var(--pokedex-height) * 0.6932); /* ✅ CORRIGIDO - Usa altura */
+    left: calc(var(--pokedex-width) * 0.085); 
+    width: calc(var(--pokedex-width) * 0.38); 
+    height: calc(var(--pokedex-height) * 0.205); /* ✅ CORRIGIDO */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-.poke-bg2{
+.poke-bg2 {
     position: absolute;
     background-color: #d30a40;
-    height: 55%;
-    width: 33%;
-    transform: translate(165%, 60%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
+    top: calc(var(--pokedex-height) * 0.34); /* ✅ CORRIGIDO - Usa altura */
+    right: calc(var(--pokedex-width) * 0.057); 
+    width: calc(var(--pokedex-width) * 0.36); 
+    height: calc(var(--pokedex-height) * 0.57); /* ✅ CORRIGIDO */
 }
-
 
 form{
     width: 100%;
@@ -111,13 +122,13 @@ form{
 .entry{
     width: 85%;
     padding: 3%;
-    margin-top: 3%;
-    font-size: 0.9rem;
+    font-size: clamp(0.7rem, 2.5vw, 1rem); /* ✅ RESPONSIVO */
     border-radius: 5px;
     border-color: black;
     font-weight: 600;
     box-shadow: -3px 3px 0px rgb(121, 118, 118), -4px 4px 0px rgb(0, 0, 0), -2px 4px 0px rgb(0, 0, 0);
 }
+
 .entry::placeholder{
     font-weight: 400;
 }
@@ -126,49 +137,47 @@ form{
     width: 88%;
     display: flex;
     min-height: 8%;
-    /* padding: 5%; */
     margin-top: 2%;
     justify-content: space-around;
 }
 
 .btn-arrows{
     width: 35%;
-    padding: 8%;
+    height: calc(var(--pokedex-height) * 0.075);
     margin-top: 2%;
-    font-size: 1.5rem;
+    font-size: clamp(0.8rem, 2vw, 1.5rem); /* ✅ RESPONSIVO */
     border-radius: 5px;
     border-color: black;
     font-weight: 600;
     box-shadow: -3px 3px 0px rgb(121, 118, 118), -4px 4px 0px rgb(0, 0, 0), -2px 4px 0px rgb(0, 0, 0);
 }
 
-.btn-arrows::after{
-    content: url(../images/arrowheads.png);
-    position: absolute;
-    transform: translate(-45%, -50%);
-}
-
 .btn-arrows:active{
     box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.6); 
 }
 
-#btn-left::after{
-    transform: translate(-55%, -54%) rotate(180deg);
+.btn-arrows img {
+    width: 16%;
+}
+
+#btn-left img{
+    transform: rotate(180deg);
 }
 
 #btn-sound{
     width: 18%;
+    display: flex;
+    justify-content: center;
 }
 
-#btn-sound::after{
-    transform: translate(-70%, -60%);
-    content: url(../images/sound-icon.png);
-    scale: 0.75
+#btn-sound img{
+    scale: 0.55;
+    width: 100%;
 }
 
 .painel{
     background-color: azure;
-    width: 92%;
+    width: 96%;
     height: 45%;
     border-style: solid;
     border-width: 2px ;
@@ -182,41 +191,37 @@ form{
 
 .poke-name{
     margin-top: 3%;
-    font-size: medium;
+    font-size: clamp(0.8rem, 3vw, 1.2rem); /* ✅ RESPONSIVO */
     color: rgb(121, 118, 118);
     font-weight: 600;
-
 }
 
 .status-bg{
-    margin-top: 5%;
+    margin-top: 2%;
     background-color: rgb(214, 213, 212);
     width: 96%;
     border-radius: 10px;
-    height: 65%;
+    height: 72%;
     justify-content: center;
     gap: 0;
-    display:flex;
-
+    display: flex;
 }
 
 .status-pt1{
     flex: 1;
     display: grid;
     margin-left: 1.5%;
-    
 }
 
 .status-pt2{
     flex: 1;
     display: grid;
     margin-right: 1.5%;
+}
 
-    & .stat-name{
-        width: 42%;
-        font-size: small;
-    }
-
+.status-pt2 .stat-name{
+    width: 42%; /* ✅ CORRIGIDO - Era 42% fixo */
+    font-size: clamp(0.6rem, 2vw, 0.96rem); /* ✅ RESPONSIVO */
 }
 
 .status-container{
@@ -227,7 +232,7 @@ form{
 
 .stat-bar{
     width: 42%;
-    height: 10px;
+    height: 28%;
     background-color: #dedede;
     border-radius: 5px;
     overflow: hidden;
@@ -235,79 +240,90 @@ form{
 
 .stat-bar-inner{
     width: 80%;
-    height: 10px;
+    height: 100%;
     background-color: #3b4cca;
     border-radius: 5px;
     overflow: hidden;
 }
 
 .stat-name{
-    /* margin-left: 1%; */
     width: 20%;
-    font-size: smaller;
+    font-size: clamp(0.6rem, 2vw, 1rem); /* ✅ RESPONSIVO */
 }
 
 .stat-value{
     width: 24%;
-    font-size:smaller;
+    font-size: clamp(0.6rem, 2vw, 1rem); /* ✅ RESPONSIVO */
 }
 
 .types-painel{
     margin-top: 5%;
     background-color: azure;
-    width: 92%;
-    height: 40%;
+    width: 96%;
+    height: 45%;
     border-style: solid;
     border-width: 2px ;
     border-radius: 10px;
     border-color: black;
     box-shadow: -3px 3px 0px rgb(121, 118, 118), -4px 4px 0px rgb(0, 0, 0), -2px 4px 0px rgb(0, 0, 0);
-    
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .type-img{
-    width: 45%;
-    height: 22%;
     padding: 1%;
     margin-top: 1%;
     border-radius: 15px;
 }
 
-.type-row{
+.types-row{
     display: flex;
+    justify-content: center;
+    height: 23%;
+    width: 100%;
 }
 
 .poke-infos{
     display: flex;
     flex-direction: row;
-    gap: 10%;
-    justify-content: center;
+    margin-top: 3%;
+    justify-content: space-around;
+    width: 95%;
+    white-space: nowrap; 
 }
 
 .info{
-    margin-top: 1%;
-    font-size: medium;
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem); /* ✅ RESPONSIVO */
     color: rgb(121, 118, 118);
     font-weight: 700;
 }
 
 .poke-height{
     margin-top: 1%;
-    font-size: medium;
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem); /* ✅ RESPONSIVO */
     color: rgb(121, 118, 118);
     font-weight: 400;
+    
 }
 
 .poke-weight{
     margin-top: 1%;
-    font-size: medium;
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem); /* ✅ RESPONSIVO */
     color: rgb(121, 118, 118);
     font-weight: 400;
 }
 
 .poke-desc{
-    margin-top: 5%;
-    font-size: small;
+    margin-top: 3.5%;
+    font-size: clamp(0.7rem, 2vw, 1rem); /* ✅ RESPONSIVO */
     font-weight: 300;
+    width: 95%;
 }
+
+@media (max-width: 550px) {
+    html {
+        font-size: calc(6px + 0.3vw);
+    }
+}
+

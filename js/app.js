@@ -142,7 +142,7 @@ async function getSound(url){
     }
 }
 
-function chooseText(entries){
+function chooseText(entries, MAX_LEN = 110){
 	// Encontrar a primeira entrada em inglês
 	const englishEntry = entries.find(e => e.language?.name === 'en') ?? entries[0]
 
@@ -154,7 +154,6 @@ function chooseText(entries){
 		.replace(/\s+/g, ' ')
 		.trim();
 
-	const MAX_LEN = 110;
 	if (normalized.length <= MAX_LEN) {
 		return { flavor_text: normalized };
 	}
@@ -172,7 +171,6 @@ function chooseText(entries){
         const finalText = `${normalized.slice(0, cut)}...`
         return { flavor_text: finalText };
 	}
-
 	const finalText = normalized.slice(0, cut + 1).trim();
 	return { flavor_text: finalText };
 } 
@@ -204,6 +202,33 @@ btnRight.addEventListener('click', async () => {
 btnSound.addEventListener('click', async () => {
     const data = await fecthPokemons(pokemon)
     getSound(data.cries.latest)
+})
+
+// Event listeners para as teclas de seta do teclado
+document.addEventListener('keydown', async (event) => {
+    if (event.key === 'ArrowLeft') {
+        if(pokemon > 1){
+            pokemon -= 1
+            pokemon = await renderPokemon(pokemon)
+        }
+    }
+    if (event.key === 'ArrowRight'){
+        pokemon += 1
+        pokemon = await renderPokemon(pokemon)
+    }
+
+    // switch(event.key) {
+    //     case 'ArrowLeft':
+    //         if(pokemon > 1){
+    //             pokemon -= 1
+    //             pokemon = await renderPokemon(pokemon)
+    //         }
+    //         break;
+    //     case 'ArrowRight':
+    //         pokemon += 1
+    //         pokemon = await renderPokemon(pokemon)
+    //         break;
+    // }
 })
 
 form.addEventListener('submit', async (event) => {
