@@ -335,6 +335,18 @@ form{
 
 @media (max-width: 500px) {
     html {
-        font-size: calc(5px + 0.3vw);
+        font-size: calc(6.0px + 0.3vw);
+    }
+}
+
+@media (max-width: 400px) {
+    html {
+        font-size: calc(4.3px + 0.3vw);
+    }
+}
+
+@media (max-width: 300px) {
+    html {
+        font-size: calc(3.8px + 0.3vw);
     }
 }

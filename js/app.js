@@ -85,15 +85,13 @@ async function fecthPokemonSpecie(url){
 }
 
 async function renderPokemon(pokemon){
-    const [data, specie_data] = await Promise.all([
-        fecthPokemons(pokemon),
-        fecthPokemonSpecie(`${BASE_URL.replace('pokemon/', 'pokemon-species/')}${pokemon}/`)
-    ]);
-    if (!data || !specie_data){
+    const data = await fecthPokemons(pokemon);
+        
+    if (!data){
     alert("Pokemon não encontrado... Tente novamente")
     }
-
-    const tipos = data.types.map(type => type.type)
+    else{
+        const tipos = data.types.map(type => type.type)
     const tipoEncontrado = tipos.find(({name}) => name in backs)
     const status = data.stats.map(stat => stat.base_stat)
 
@@ -126,8 +124,13 @@ async function renderPokemon(pokemon){
     Weight.innerHTML = `${(data.weight / 10)} kg`
     Height.innerHTML = `${(data.height / 10)} m`
 
-    Desc.textContent = `"${chooseText(specie_data.flavor_text_entries).flavor_text}"`
-
+    const specie_data = await fecthPokemonSpecie(data.species.url)
+    if (!specie_data){
+        Desc.textContent = 'Descrição não disponível'
+    } else{
+        Desc.textContent = `"${chooseText(specie_data.flavor_text_entries).flavor_text}"`
+    }
+    
     status.forEach((stat, index )=> {
         statusValues[index].innerHTML = stat;
         statusBars[index].style.width = `${(stat/2)}%`
@@ -145,6 +148,7 @@ async function renderPokemon(pokemon){
 
     return data.id
     }
+}
 
 async function getSound(url){
     try {
